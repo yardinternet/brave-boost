@@ -32,7 +32,7 @@ class TestCase extends Orchestra
 	protected function getPackageProviders($app)
 	{
 		return [
-			'Yard\Brave\Boost\Brave\BoostServiceProvider',
+			'Yard\Brave\Boost\BoostServiceProvider',
 		];
 	}
 }
