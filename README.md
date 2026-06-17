@@ -8,14 +8,16 @@
 
 
 
+Brave Boost installs Brave AI guidelines and skills into the coding agents you
+use (Claude Code, Cursor, GitHub Copilot), so they follow Brave ecosystem
+conventions in your project.
+
 ## Requirements
 
 - [Sage](https://github.com/roots/sage) >= 10.0
 - [Acorn](https://github.com/roots/acorn) >= 4.0
 
 ## Installation
-
-To install this package using Composer, follow these steps:
 
 1. Add the following to the `repositories` section of your `composer.json`:
 
@@ -26,37 +28,57 @@ To install this package using Composer, follow these steps:
     }
     ```
 
-2. Install this package with Composer:
+2. Install with Composer:
 
     ```sh
     composer require yard/brave-boost
     ```
 
-3. Run the Acorn WP-CLI command to discover this package:
+3. Discover the package with Acorn:
 
     ```shell
     wp acorn package:discover
     ```
 
-You can publish the config file with:
-
-```shell
-wp acorn vendor:publish --provider="Yard\Brave\Boost\Brave\BoostServiceProvider"
-```
-
 ## Usage
 
-From a Blade template:
-
-```blade
-@include('brave-boost::boost')
-```
-
-From WP-CLI:
+Run the interactive installer and pick your agents:
 
 ```shell
-wp acorn boost
+wp acorn brave-boost:install
 ```
+
+Re-apply guidelines and skills non-interactively (e.g. after `composer update`),
+reusing the choices saved in `brave-boost.json`:
+
+```shell
+wp acorn brave-boost:update
+```
+
+### What gets written
+
+| Agent          | Guidelines                          | Skills            |
+| -------------- | ----------------------------------- | ----------------- |
+| Claude Code    | `CLAUDE.md`                         | `.claude/skills/` |
+| Cursor         | `.cursor/rules/brave-boost.mdc`     | —                 |
+| GitHub Copilot | `.github/copilot-instructions.md`   | —                 |
+
+Guidelines are written inside `<brave-boost-guidelines>` markers — any content
+you add outside the markers is preserved on update. Commit the generated files;
+they are shared project context, not local config.
+
+### Configuration
+
+Publish the config to tweak behaviour:
+
+```shell
+wp acorn vendor:publish --provider="Yard\Brave\Boost\BoostServiceProvider"
+```
+
+- `project_root` — where files are written. Defaults to the nearest `.git`
+  ancestor (Acorn's `base_path()` points at the theme, not the repo root).
+  Override per-run with `--path`.
+- `skills.exclude` — skill names to skip when installing.
 
 ## About us
 
