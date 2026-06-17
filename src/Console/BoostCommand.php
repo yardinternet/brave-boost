@@ -2,19 +2,19 @@
 
 declare(strict_types=1);
 
-namespace Yard\SkeletonPackage\Console;
+namespace Yard\Brave\Boost\Console;
 
 use Illuminate\Console\Command;
-use Yard\SkeletonPackage\Example;
+use Yard\Brave\Boost\Boost;
 
-class ExampleCommand extends Command
+class BoostCommand extends Command
 {
 	/**
 	 * The name and signature of the console command.
 	 *
 	 * @var string
 	 */
-	protected $signature = 'example';
+	protected $signature = 'boost';
 
 	/**
 	 * The console command description.
@@ -29,7 +29,7 @@ class ExampleCommand extends Command
 	public function handle(): void
 	{
 		$this->info(
-			app(Example::class)->getQuote()
+			app(Boost::class)->getQuote()
 		);
 	}
 }

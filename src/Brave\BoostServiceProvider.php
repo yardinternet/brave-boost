@@ -2,30 +2,30 @@
 
 declare(strict_types=1);
 
-namespace Yard\SkeletonPackage;
+namespace Yard\Brave\Boost;
 
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
-use Yard\SkeletonPackage\Console\ExampleCommand;
+use Yard\Brave\Boost\Console\BoostCommand;
 
-class SkeletonPackageServiceProvider extends PackageServiceProvider
+class Brave\BoostServiceProvider extends PackageServiceProvider
 {
 	public function configurePackage(Package $package): void
 	{
 		$package
-			->name('skeleton-package')
+			->name('brave-boost')
 			->hasConfigFile()
 			->hasViews()
-			->hasCommand(ExampleCommand::class);
+			->hasCommand(BoostCommand::class);
 	}
 
 	public function packageRegistered(): void
 	{
-		$this->app->singleton(Example::class, fn () => new Example($this->app));
+		$this->app->singleton(Boost::class, fn () => new Boost($this->app));
 	}
 
 	public function packageBooted(): void
 	{
-		$this->app->make(Example::class);
+		$this->app->make(Boost::class);
 	}
 }

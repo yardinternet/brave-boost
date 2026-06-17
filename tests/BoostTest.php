@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-use Yard\SkeletonPackage\Example;
+use Yard\Brave\Boost\Boost;
 
 it('can retrieve a random inspirational quote', function () {
-	$quote = app()->make(Example::class)->getQuote();
+	$quote = app()->make(Boost::class)->getQuote();
 
 	expect($quote)->tobe('For every Sage there is an Acorn.');
 });
@@ -20,7 +20,7 @@ it('can retrieve post content', function () {
 		->with(123)
 		->andReturn($post);
 
-	$postContent = app()->make(Example::class)->getPostContent($postId);
+	$postContent = app()->make(Boost::class)->getPostContent($postId);
 
 	expect($postContent)->tobe('Hello World!');
 });

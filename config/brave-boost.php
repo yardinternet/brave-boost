@@ -6,7 +6,7 @@ return [
 
 	/*
 	|--------------------------------------------------------------------------
-	| Example Package
+	| Boost Package
 	|--------------------------------------------------------------------------
 	|
 	| Configuration files provide a great way to customize your package.

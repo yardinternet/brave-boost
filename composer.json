@@ -1,11 +1,11 @@
 {
-	"name": "yard/skeleton-package",
+	"name": "yard/brave-boost",
 	"type": "package",
-	"description": ":package_description",
+	"description": "This is my package brave-boost",
 	"license": "MIT",
 	"support": {
-		"source": "https://github.com/yardinternet/skeleton-package",
-		"issues": "https://github.com/yardinternet/skeleton-package/issues"
+		"source": "https://github.com/yardinternet/brave-boost",
+		"issues": "https://github.com/yardinternet/brave-boost/issues"
 	},
 	"config": {
 		"sort-packages": true,
@@ -33,12 +33,12 @@
 	},
 	"autoload": {
 		"psr-4": {
-			"Yard\\SkeletonPackage\\": "src/"
+			"Yard\\Brave\\Boost\\": "src/"
 		}
 	},
 	"autoload-dev": {
 		"psr-4": {
-			"Yard\\SkeletonPackage\\Tests\\": "tests/"
+			"Yard\\Brave\\Boost\\Tests\\": "tests/"
 		}
 	},
 	"scripts": {
@@ -60,7 +60,7 @@
 	"extra": {
 		"acorn": {
 			"providers": [
-				"Yard\\SkeletonPackage\\SkeletonPackageServiceProvider"
+				"Yard\\Brave\\Boost\\BraveBoostServiceProvider"
 			]
 		}
 	}
