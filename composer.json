@@ -60,7 +60,7 @@
 	"extra": {
 		"acorn": {
 			"providers": [
-				"Yard\\Brave\\Boost\\BraveBoostServiceProvider"
+				"Yard\\Brave\\Boost\\BoostServiceProvider"
 			]
 		}
 	}
