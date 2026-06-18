@@ -13,8 +13,7 @@ use SplFileInfo;
 use Yard\Brave\Boost\Contracts\SupportsSkills;
 
 /**
- * Copies bundled skills into an agent's skills directory and prunes ones that
- * were previously installed by Boost but are no longer bundled.
+ * Copies bundled skills into an agent's skills directory.
  */
 class SkillWriter
 {
@@ -23,12 +22,11 @@ class SkillWriter
 	}
 
 	/**
-	 * @param  Collection<int, Skill>  $skills  Skills to install now.
-	 * @param  list<string>            $previous Skill names installed on the last run.
+	 * @param  Collection<int, Skill>  $skills
 	 *
-	 * @return list<string>            Names actually installed.
+	 * @return list<string>  Names installed.
 	 */
-	public function sync(Collection $skills, array $previous = []): array
+	public function sync(Collection $skills): array
 	{
 		$base = $this->basePath();
 		$this->ensureDirectory($base);
@@ -38,11 +36,6 @@ class SkillWriter
 		foreach ($skills as $skill) {
 			$this->copyDir($skill->sourceDir, $base.'/'.$skill->name);
 			$installed[] = $skill->name;
-		}
-
-		// Remove skills we installed previously that are no longer bundled.
-		foreach (array_diff($previous, $installed) as $stale) {
-			$this->deleteDir($base.'/'.$stale);
 		}
 
 		return $installed;

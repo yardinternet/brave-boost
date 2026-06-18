@@ -7,7 +7,6 @@ namespace Yard\Brave\Boost;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
 use Yard\Brave\Boost\Console\InstallCommand;
-use Yard\Brave\Boost\Console\UpdateCommand;
 
 class BoostServiceProvider extends PackageServiceProvider
 {
@@ -18,7 +17,6 @@ class BoostServiceProvider extends PackageServiceProvider
 			->hasConfigFile()
 			->hasCommands([
 				InstallCommand::class,
-				UpdateCommand::class,
 			]);
 	}
 }

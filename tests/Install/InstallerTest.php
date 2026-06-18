@@ -22,10 +22,10 @@ it('writes guidelines for each given agent', function () {
 it('installs skills only for skill-capable agents', function () {
 	$agents = new Collection([fakeAgent('A.md'), fakeSkillAgent('.claude/skills')]);
 
-	$result = $this->installer->installSkills($agents);
+	$results = $this->installer->installSkills($agents);
 
-	expect($result['installed'])->toContain('brave-post-type')
-		->and($result['results'])->toHaveKey('Fake Skill Agent')
-		->and($result['results'])->not->toHaveKey('Fake Agent')
+	expect($results)->toHaveKey('Fake Skill Agent')
+		->and($results['Fake Skill Agent'])->toBe('ok')
+		->and($results)->not->toHaveKey('Fake Agent')
 		->and(is_dir(Paths::project('.claude/skills/brave-post-type')))->toBeTrue();
 });
