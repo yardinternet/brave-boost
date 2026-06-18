@@ -11,6 +11,8 @@ use Yard\Brave\Boost\Agents\Cursor;
 use Yard\Brave\Boost\Contracts\Agent;
 use Yard\Brave\Boost\Support\Paths;
 
+// Detection is unused since install writes to all agents unconditionally.
+// Kept for potential future use.
 class AgentDetector
 {
 	/**

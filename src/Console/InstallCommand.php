@@ -12,7 +12,7 @@ use Yard\Brave\Boost\Support\Paths;
 
 class InstallCommand extends Command
 {
-	protected $signature = 'brave-boost:install
+	protected $signature = 'boost:install
         {--path= : Project root to write into (defaults to the git root)}
         {--no-guidelines : Skip writing AI guidelines}
         {--no-skills : Skip installing skills}';

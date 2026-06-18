@@ -6,20 +6,11 @@
 [![Code Coverage Badge](https://github.com/yardinternet/brave-boost/blob/badges/coverage.svg)](https://github.com/yardinternet/brave-boost/actions/workflows/badges.yml)
 [![Lines of Code Badge](https://github.com/yardinternet/brave-boost/blob/badges/lines-of-code.svg)](https://github.com/yardinternet/brave-boost/actions/workflows/badges.yml)
 
-
-
-Brave Boost installs Brave AI guidelines and skills into the coding agents you
-use (Claude Code, Cursor, GitHub Copilot), so they follow Brave ecosystem
-conventions in your project.
-
-## Requirements
-
-- [Sage](https://github.com/roots/sage) >= 10.0
-- [Acorn](https://github.com/roots/acorn) >= 4.0
+Brave Boost installs Brave AI guidelines and skills into the coding agents you use (Claude Code, Cursor, GitHub Copilot), so they follow Brave ecosystem conventions in your project.
 
 ## Installation
 
-1. Add the following to the `repositories` section of your `composer.json`:
+1. Add to the `repositories` section of `composer.json`:
 
     ```json
     {
@@ -28,13 +19,13 @@ conventions in your project.
     }
     ```
 
-2. Install with Composer:
+2. Install:
 
     ```sh
     composer require yard/brave-boost
     ```
 
-3. Discover the package with Acorn:
+3. Discover the package:
 
     ```shell
     wp acorn package:discover
@@ -42,43 +33,45 @@ conventions in your project.
 
 ## Usage
 
-Run the interactive installer and pick your agents:
-
 ```shell
-wp acorn brave-boost:install
+wp acorn boost:install
 ```
 
-Re-apply guidelines and skills non-interactively (e.g. after `composer update`),
-reusing the choices saved in `brave-boost.json`:
+Writes guidelines and skills for all supported agents. Re-run any time to update (e.g. after `composer update`).
 
-```shell
-wp acorn brave-boost:update
-```
+### Options
+
+| Flag | Effect |
+| --- | --- |
+| `--no-guidelines` | Skip writing AI guidelines |
+| `--no-skills` | Skip installing skills |
+| `--path=` | Override project root (defaults to git root) |
 
 ### What gets written
 
-| Agent          | Guidelines                          | Skills            |
-| -------------- | ----------------------------------- | ----------------- |
-| Claude Code    | `CLAUDE.md`                         | `.claude/skills/` |
-| Cursor         | `.cursor/rules/brave-boost.mdc`     | —                 |
-| GitHub Copilot | `.github/copilot-instructions.md`   | —                 |
+| Agent | Guidelines | Skills |
+| --- | --- | --- |
+| Claude Code | `CLAUDE.md` | `.claude/skills/` |
+| Cursor | `.cursor/rules/brave-boost.mdc` | — |
+| GitHub Copilot | `.github/copilot-instructions.md` | — |
 
-Guidelines are written inside `<brave-boost-guidelines>` markers — any content
-you add outside the markers is preserved on update. Commit the generated files;
-they are shared project context, not local config.
+Guidelines are written inside `<brave-boost-guidelines>` markers — content outside the markers is preserved. Add these files to `.gitignore`:
+
+```gitignore
+CLAUDE.md
+.cursor/rules/brave-boost.mdc
+.github/copilot-instructions.md
+.claude/skills/brave-*/
+```
 
 ### Configuration
-
-Publish the config to tweak behaviour:
 
 ```shell
 wp acorn vendor:publish --provider="Yard\Brave\Boost\BoostServiceProvider"
 ```
 
-- `project_root` — where files are written. Defaults to the nearest `.git`
-  ancestor (Acorn's `base_path()` points at the theme, not the repo root).
-  Override per-run with `--path`.
-- `skills.exclude` — skill names to skip when installing.
+- `project_root` — override where files are written. Defaults to the nearest `.git` ancestor.
+- `skills.exclude` — skill names to skip.
 
 ## About us
 
