@@ -12,26 +12,23 @@ description: >
 
 # Brave Gutenberg Block Scaffolder
 
-Scaffolds all files for a new custom Gutenberg block in a Brave/Sage WordPress theme.
-
 ## Step 1 — Gather info
 
-If the user hasn't provided a **block name** (kebab-case, e.g. `test-block`), ask for it now. Do not proceed without it.
+Ask for **block name** if not provided (kebab-case, e.g. `test-block`). Do not proceed without it.
+Check for **attributes**; default: `isEnabled` (boolean ToggleControl).
 
-Also check if the user mentioned any **specific attributes** (like ToggleControl, SelectControl, TextControl, etc.). If not, default to one `ToggleControl` boilerplate attribute called `isEnabled` (boolean, default false).
-
-Derive all naming variants:
+Derive naming variants:
 - **kebab**: `test-block`
-- **PascalCase**: `TestBlock` (capitalize each word after `-`)
+- **PascalCase**: `TestBlock`
 - **Title**: `Test Block`
 - **CSS class prefix**: `wp-block-theme-test-block`
 
 ## Step 2 — Detect theme root
 
-Theme root is the directory containing `config/blocks.php`. In most Brave projects this is:
+Theme root = dir with `config/blocks.php`, usually:
 `web/app/themes/sage/`
 
-Verify it exists. If working path differs, adapt paths accordingly.
+Verify it exists. Adapt paths if different.
 
 ## Step 3 — Create JS block files
 
@@ -62,7 +59,7 @@ Create directory: `resources/scripts/blocks/<kebab>/`
 }
 ```
 
-For the default ToggleControl boilerplate, `<ATTRIBUTES_JSON>` is:
+Default:
 ```json
 "isEnabled": {
     "type": "boolean",
@@ -70,7 +67,7 @@ For the default ToggleControl boilerplate, `<ATTRIBUTES_JSON>` is:
 }
 ```
 
-Map user-requested attributes to appropriate Gutenberg attribute types:
+Attribute type map:
 - ToggleControl → `"type": "boolean", "default": false`
 - SelectControl → `"type": "string", "default": ""`
 - TextControl → `"type": "string", "default": ""`
@@ -78,11 +75,9 @@ Map user-requested attributes to appropriate Gutenberg attribute types:
 
 ### edit.jsx
 
-Import only what's used. Default boilerplate uses one ToggleControl inside InspectorControls.
-
-For simple blocks (no custom editor UI needed, just render the PHP output in the editor), use `ServerSideRender` instead of a placeholder `<p>` tag. This shows the live PHP-rendered output inside the editor. Use this when:
-- The block has no complex editor interactions (no RichText, no InnerBlocks, no inline editing)
-- The block renders a self-contained component (newsletter, card, CTA, etc.)
+Use `ServerSideRender` for blocks without complex editor interactions (renders live PHP output). When:
+- No RichText, InnerBlocks, or inline editing
+- Self-contained component (newsletter, card, CTA, etc.)
 
 ```jsx
 /**
@@ -131,11 +126,10 @@ const Edit = ( { attributes, setAttributes } ) => {
 export default Edit;
 ```
 
-Without ServerSideRender (complex editor interactions), use a placeholder `<p>` instead of the `ServerSideRender` import and component.
+Without ServerSideRender: use `<p>` placeholder.
+Multiple attributes: destructure all, add matching control, adapt imports.
 
-If the user requested **multiple attributes**, destructure them all and add the appropriate control per type. If a SelectControl is requested, add a sensible `options` array. Adapt imports accordingly (e.g. add `SelectControl` to the `@wordpress/components` import).
-
-**RadioControl** — use when the block has mutually exclusive named modes that load different views:
+**RadioControl** — use for mutually exclusive named modes:
 ```jsx
 import { RadioControl } from '@wordpress/components';
 
@@ -150,7 +144,7 @@ import { RadioControl } from '@wordpress/components';
 />
 ```
 
-When using RadioControl for view switching, the PHP render method should match on the attribute value and return the corresponding view:
+RadioControl view switching — PHP render:
 ```php
 $variant = $attributes['variant'] ?? 'default';
 $view = match ($variant) {
@@ -175,7 +169,7 @@ Create a separate Blade file for each variant.
 
 ### icon.jsx
 
-Generate a relevant SVG icon (viewBox="0 0 640 640", `<path>` based). Wrap with `BlockIconColor` from `@yardinternet/gutenberg-components`:
+Relevant icon; fallback to generic layout icon. Generate SVG (`viewBox="0 0 640 640"`), wrap with `BlockIconColor`:
 
 ```jsx
 /**
@@ -195,11 +189,9 @@ const icon = {
 export default icon;
 ```
 
-Design an appropriate icon for the block's purpose. If the block name gives no clear meaning, use a generic layout/block icon (rectangle with content lines).
-
 ### index.jsx
 
-Server-side rendered block (PHP render_callback), so save returns `null`:
+Server-side rendered; `save` returns `null`:
 
 ```jsx
 /**
@@ -222,7 +214,7 @@ registerBlockType( metadata, {
 } );
 ```
 
-Exception: if the user requests InnerBlocks, use `save: () => <InnerBlocks.Content />` and add the InnerBlocks import.
+Exception: InnerBlocks → `save: () => <InnerBlocks.Content />` with matching import.
 
 ### style.css
 
@@ -261,13 +253,11 @@ class <PascalCase>
 }
 ```
 
-For each attribute from block.json, add a safe assignment line like:
+Safe attribute assignments:
 - boolean: `'isEnabled' => $attributes['isEnabled'] ?? false,`
 - string: `'label' => $attributes['label'] ?? '',`
 - number: `'count' => $attributes['count'] ?? 0,`
 - object/array: `'focalPoint' => $attributes['focalPoint'] ?? [],`
-
-Always use `?? <default>` for safety.
 
 ## Step 5 — Create Blade template
 
@@ -282,18 +272,16 @@ Path: `resources/views/components/<kebab>.blade.php`
 </div>
 ```
 
-Output all passed attributes safely using Blade syntax. For strings use `{{ $attr }}`. For raw HTML use `{!! $attr !!}` only when it's WordPress-generated HTML (like `wp_get_attachment_image`). Booleans use `@if`.
+Strings: `{{ }}`. WP HTML only: `{!! !!}`. Booleans: `@if`.
 
 ## Step 6 — Register in config/blocks.php
 
-Add the use statement at the top (with other use statements) and a new entry in the return array.
-
-**Add use statement** (alphabetically among existing ones):
+Use (alphabetical):
 ```php
 use App\Blocks\<PascalCase>\<PascalCase>;
 ```
 
-**Add array entry** (at end of array, before closing `]`):
+Array entry:
 ```php
 '<kebab>' => [
     'block_type' => '<kebab>',
@@ -303,11 +291,11 @@ use App\Blocks\<PascalCase>\<PascalCase>;
 ],
 ```
 
-Edit the file with Edit tool — don't overwrite it. Find the last `],` before the closing `];` and insert after it.
+Edit, don't overwrite. Insert after last `],`.
 
 ## Step 7 — Confirm
 
-List all created/modified files and their paths. Mention that Vite will auto-pick up the new block directory.
+List all created/modified files. Vite auto-discovers block dirs.
 
 ---
 
@@ -321,7 +309,5 @@ List all created/modified files and their paths. Mention that Vite will auto-pic
 
 ## Notes
 
-- Vite auto-discovers block files; no manual enqueue needed.
 - `render_callback` uses PHP 8.1 first-class callable syntax `->render(...)`.
-- The Block class in `app/Blocks/` handles only attribute passing. Complex logic (computed properties, helper methods) belongs in a separate View Component (`app/View/Components/`) — only create that if the user requests it or if logic clearly warrants it.
-- Keep CSS files minimal at scaffold time; developer fills in real styles.
+- Block class in `app/Blocks/` handles only attribute passing. Complex logic belongs in a View Component (`app/View/Components/`) — only create if requested or clearly warranted.

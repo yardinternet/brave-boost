@@ -204,7 +204,7 @@ use App\FieldGroups\{Name};
 - Taxonomies: `#[Terms]`, type `Collection<int, TermData>`, plural var name (`$sectors`)
 - Meta types: Text/Email/URL → `string $x = ''`, DatePicker → `?CarbonImmutable $x = null`, GoogleMap/Image → `?array $x = null`, Relationship → `array $x = []`, Number → `int|float $x = 0`, TrueFalse → `bool $x = false`
 
-**Derived methods (add based on field names):**
+Derived methods (add when field names imply them):
 - `DatePicker` → `{field}Formatted(string $format = 'j F Y'): string` using `wp_date()` + `CarbonImmutable->getTimestamp()`
 - Field named "deadline/end/expires" → also add `{field}HasPassed(): bool` using `->isPast()`
 - Field named "start/starts" → also add `isUpcoming(): bool` using `->isFuture()`
@@ -316,8 +316,7 @@ Add to `web/app/themes/sage/config/facetwp/templates/search.php` `post_type` arr
 **FacetWP loop view:**
 `web/app/themes/sage/resources/views/blocks/FacetWP/loops/{slug}-loop.blade.php`
 
-Grid (cards/people/visual): use `js-facetwp-animation *:opacity-0 md:grid md:grid-cols-2 md:gap-6`.
-List (detailed rows): use `flex flex-col gap-4`.
+Grid (cards/people/visual): `js-facetwp-animation *:opacity-0 md:grid md:grid-cols-2 md:gap-6`. List (detailed rows): `flex flex-col gap-4`.
 
 ```blade
 {{-- Grid --}}
@@ -420,7 +419,7 @@ Icons: `fa-paper-plane` (mail), `fa-phone` (phone), `fa-globe` (website), `fa-lo
 
 **File:** `web/app/themes/sage/resources/views/single-{slug}.blade.php`
 
-Check other single-* templates for layout. Most use `<x-layout.article-aside>`. Output ALL taxonomies and meta fields.
+Check other single-* templates for layout. Most use `<x-layout.article-aside>` or `<x-layout.article>`. Output ALL taxonomies + meta.
 
 ```blade
 <x-layout.article-aside>

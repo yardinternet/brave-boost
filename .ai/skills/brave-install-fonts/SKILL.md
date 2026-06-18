@@ -5,8 +5,6 @@ description: How to install fonts in a Brave/Sage WordPress theme — custom sel
 
 # Installing Fonts in Brave/Sage
 
-Three approaches depending on font source:
-
 - **Custom/licensed fonts** → self-host as `.woff2` files
 - **Google Fonts** → use `spatie/laravel-google-fonts` package
 - **Adobe Fonts (Typekit)** → enqueue kit URL in `Assets.php`
@@ -23,7 +21,7 @@ Place `.woff2` files in:
 web/app/themes/sage/resources/fonts/
 ```
 
-Naming convention: `FontName-Weight.woff2` (e.g. `ESKlarheitKurrent-Bd.woff2`, `Akkurat.woff2`)
+`FontName-Weight.woff2` (e.g. `ESKlarheitKurrent-Bd.woff2`, `Akkurat.woff2`)
 
 ### 2. Declare @font-face
 
@@ -41,9 +39,7 @@ Add to `resources/styles/base/typography.css`:
 
 - Use the `@sage/fonts/` alias — it resolves to `resources/fonts/` via the Brave Vite config
 - One `@font-face` block per weight/style variant
-- Always include `font-display: swap`
-
-For multiple weights of the same family:
+- Include `font-display: swap`
 
 ```css
 @font-face {
@@ -71,16 +67,12 @@ Add to `resources/styles/base/config.css` inside the `@theme static {}` block, u
 --font-[slug]: 'Your Font Name', sans-serif;
 ```
 
-Tailwind 4 automatically generates a `font-[slug]` utility class from this CSS variable.
-
-**Example:**
+Tailwind 4 generates `font-[slug]` utility from the variable.
 
 ```css
 --font-akkurat: 'Akkurat', sans-serif;
 --font-klarheit: 'ES Klarheit Kurrent', serif;
 ```
-
-→ generates `font-akkurat` and `font-klarheit` utility classes.
 
 ### 4. Use in templates and CSS
 
@@ -101,13 +93,13 @@ h1, h2, h3 {
     @apply font-akkurat;
 }
 ```
-`typography.css` is imported in both `frontend.css` and `editor.css`, so fonts load in both the frontend and the Gutenberg block editor.
+`typography.css` imported in `frontend.css` + `editor.css`.
 
 ---
 
 ## Approach 2: Google Fonts
 
-This is the default approach. It already exists in projects. Check if it already has it. 
+Default approach; check if already installed.
 
 ### 1. Install the package
 
@@ -133,15 +125,15 @@ return [
 ];
 ```
 
-### 4. Register Tailwind font utility
+### 3. Register Tailwind font utility
 
-Same as custom fonts — add to `resources/styles/base/config.css` inside `@theme static {}`:
+Add to `resources/styles/base/config.css` inside `@theme static {}`:
 
 ```css
 --font-open-sans: 'Open Sans', sans-serif;
 ```
 
-### 5. Output the font link tag
+### 4. Output the font link tag
 
 In `app/Hooks/Assets.php`, add the `registerGoogleFontsFrontend()` method:
 
@@ -159,11 +151,11 @@ public function registerGoogleFontsFrontend(): void
 
 ## Approach 3: Adobe Fonts (Typekit)
 
-No package needed. Adobe generates a kit URL; enqueue it as a stylesheet so it loads in both the frontend and the block editor.
+No package. Enqueue kit URL as stylesheet.
 
 ### 1. Get your kit URL
 
-In Adobe Fonts, go to your Web Project and copy the embed URL. It looks like:
+Adobe Fonts → Web Project → copy embed URL:
 
 ```
 https://use.typekit.net/abc1234.css
@@ -171,7 +163,7 @@ https://use.typekit.net/abc1234.css
 
 ### 2. Enqueue in Assets.php
 
-Add a `wp_enqueue_style` call inside `registerBlockAssets()` in `app/Hooks/Assets.php`. That hook fires on both frontend and editor (`enqueue_block_assets`):
+`enqueue_block_assets` fires on frontend + editor:
 
 ```php
 #[Action('enqueue_block_assets')]
@@ -186,7 +178,7 @@ public function registerBlockAssets(): void
 
 Add to `resources/styles/base/config.css` inside `@theme static {}`.
 
-Use the font family name exactly as Adobe defines it (check the kit's CSS or the Adobe Fonts site):
+Use exact family name from Adobe kit:
 
 ```css
 --font-proxima: 'proxima-nova', sans-serif;

@@ -139,7 +139,7 @@ Vite requires `.jsx` extension for any file containing JSX.
 
 **Detect JSX** — file needs renaming if it contains: angle-bracket tags (`<ComponentName`, `<svg`, `<div`), JSX in call arguments (`icon: { src: (<svg`), or JSX spread (`<BlockEdit { ...props } />`).
 
-**Scan every `.js` file in:**
+Scan `.js` files in:
 - `resources/scripts/editor/*.js` — top-level: `block-variations.js`, `block-styles.js`, `hooks.js`, etc.
 - `resources/scripts/editor/block-hooks/*.js`
 - `resources/scripts/editor/components/*.js`
@@ -168,8 +168,7 @@ Scan every `.css` file in `resources/styles/` and `resources/scripts/`. Rewrite 
 
 ## Phase 6: Assets.php
 
-Replace use statements: remove `FileNotFoundException`, add `Vite` and `Filter`.
-
+Replace use statements:
 ```php
 use Illuminate\Support\Facades\Vite;
 use Yard\Hook\Action;

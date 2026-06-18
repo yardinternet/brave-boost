@@ -1,4 +1,4 @@
-# brave-boost
+# Brave Boost
 
 [![Code Style](https://github.com/yardinternet/brave-boost/actions/workflows/format-php.yml/badge.svg?no-cache)](https://github.com/yardinternet/brave-boost/actions/workflows/format-php.yml)
 [![PHPStan](https://github.com/yardinternet/brave-boost/actions/workflows/phpstan.yml/badge.svg?no-cache)](https://github.com/yardinternet/brave-boost/actions/workflows/phpstan.yml)
