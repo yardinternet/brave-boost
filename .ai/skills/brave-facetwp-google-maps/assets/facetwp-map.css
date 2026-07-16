@@ -1,0 +1,77 @@
+/*
+ * FacetWP map view styles.
+ */
+
+.facetwp {
+	/* Map */
+	.facetwp-type-map {
+		@apply h-(--facetwp-map-height);
+	}
+
+	.facetwp-map-filtering {
+		@apply hidden;
+	}
+
+	.facetwp-template-map {
+		animation: 0.4s fadeLeft ease;
+
+		&.is-hidden {
+			display: none;
+		}
+
+		.facetwp-type-map .facetwp-map-filtering {
+			display: none;
+		}
+	}
+
+	.facetwp-template-list {
+		animation: 0.4s fadeRight ease;
+
+		&.is-hidden {
+			display: none;
+		}
+	}
+
+	/* Window info content */
+	.gm-style-iw {
+		@apply z-1 max-w-[380px]! overflow-visible rounded-none bg-white pl-0 shadow-none;
+
+		&::before {
+			@apply content absolute inset-0 top-5 right-5 -bottom-5 -left-5 -z-1 bg-primary-100;
+		}
+
+		> * {
+			@apply bg-white;
+		}
+
+		.gm-style-iw-d {
+			@apply -mt-4 pb-4 pl-6;
+		}
+	}
+
+	/* Proximity */
+	.facetwp-location {
+		@apply w-full bg-white;
+	}
+
+	.location-results {
+		@apply z-2 border-primary-100 bg-white shadow;
+	}
+
+	.location-result {
+		@apply border-b border-gray-500/20 px-3 py-2;
+
+		&.active,
+		&:hover {
+			@apply bg-primary-100;
+		}
+	}
+
+	.location-attribution {
+		@apply hidden;
+	}
+
+	.facetwp-radius-dropdown {
+		@apply relative z-1 mt-2 w-full bg-white py-3;
+	}
+}
