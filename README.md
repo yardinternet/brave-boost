@@ -10,22 +10,13 @@ Brave Boost installs Brave AI guidelines and skills into the coding agents you u
 
 ## Installation
 
-1. Add to the `repositories` section of `composer.json`:
-
-    ```json
-    {
-      "type": "vcs",
-      "url": "git@github.com:yardinternet/brave-boost.git"
-    }
-    ```
-
-2. Install:
+1. Install:
 
     ```sh
     composer require yard/brave-boost
     ```
 
-3. Discover the package:
+2. Discover the package:
 
     ```shell
     wp acorn package:discover
@@ -33,29 +24,13 @@ Brave Boost installs Brave AI guidelines and skills into the coding agents you u
 
 ## Usage
 
+1. Run the install command:
+
 ```shell
 wp acorn boost:install
 ```
 
-Writes guidelines and skills for all supported agents. Re-run any time to update (e.g. after `composer update`).
-
-### Options
-
-| Flag | Effect |
-| --- | --- |
-| `--no-guidelines` | Skip writing AI guidelines |
-| `--no-skills` | Skip installing skills |
-| `--path=` | Override project root (defaults to git root) |
-
-### What gets written
-
-| Agent | Guidelines | Skills |
-| --- | --- | --- |
-| Claude Code | `CLAUDE.md` | `.claude/skills/` |
-| Cursor | `.cursor/rules/brave-boost.mdc` | — |
-| GitHub Copilot | `.github/copilot-instructions.md` | — |
-
-Guidelines are written inside `<brave-boost-guidelines>` markers — content outside the markers is preserved. Add these files to `.gitignore`:
+2. Add the generated files to the `.gitignore` of your project.
 
 ```gitignore
 CLAUDE.md
@@ -64,7 +39,17 @@ CLAUDE.md
 .claude/skills/brave-*/
 ```
 
-### Configuration
+## What gets written
+
+| Agent | Guidelines | Skills |
+| --- | --- | --- |
+| Claude Code | `CLAUDE.md` | `.claude/skills/` |
+| Cursor | `.cursor/rules/brave-boost.mdc` | — |
+| GitHub Copilot | `.github/copilot-instructions.md` | — |
+
+Guidelines are written inside `<brave-boost-guidelines>` markers — content outside the markers is preserved. 
+
+## Configuration
 
 ```shell
 wp acorn vendor:publish --provider="Yard\Brave\Boost\BoostServiceProvider"
